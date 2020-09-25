@@ -1,0 +1,3 @@
+export const textInfoMock: string = `Lorem ipsum dolor sit amet. A exercitationem culpa sed tempora veritatis eos laudantium sint sit vero beatae! Qui quisquam officiis aut quidem consequatur qui repudiandae magni rem numquam dolorem qui atque commodi. Eum nobis quis ad aliquid adipisci non nostrum similique?
+Rem sequi deleniti aut voluptatem eius et sunt expedita ad quae sunt qui maiores atque hic dicta Quis ut architecto cupiditate. Ut reiciendis omnis sit nihil repudiandae ea dolorum iure sed possimus voluptatem.
+Eum mollitia nostrum et assumenda iste est ipsa accusamus At mollitia illo. Sit magni rerum quo quasi voluptas ab voluptas omnis non harum doloribus At ducimus voluptate.`;
