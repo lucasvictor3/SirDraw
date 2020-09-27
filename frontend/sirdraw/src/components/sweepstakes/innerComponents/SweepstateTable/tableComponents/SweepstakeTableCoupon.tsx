@@ -43,7 +43,7 @@ const SweepstakesTableCoupon: React.FC<ISweepstakeTicketProps> = ({
   return (
     <div className="coupon-card">
       <Card>
-        <div style={{ display: 'flex', marginLeft: '20rem' }}>
+        <div className="inner-card">
           <h2>TOTAL: R$ {totalValue}</h2>
           <Button
             onClick={toggleButton}
