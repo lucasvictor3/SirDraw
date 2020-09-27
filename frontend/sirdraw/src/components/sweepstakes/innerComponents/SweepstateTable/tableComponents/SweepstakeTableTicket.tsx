@@ -23,15 +23,18 @@ const SweepstakesTableTicket: React.FC<ISweepstakeTicketProps> = ({
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ): void => {
     let currentButtonStyle: React.CSSProperties = {};
+    let newSelectedTickets: number[] = [];
 
     if (selected) {
       currentButtonStyle = { ...styleProps };
-      countSelectedTickets(
-        currentSelectedTickets.filter((value) => value !== ticketNumber)
+      newSelectedTickets = currentSelectedTickets.filter(
+        (value) => value !== ticketNumber
       );
+      countSelectedTickets(newSelectedTickets);
     } else {
       currentButtonStyle = { ...styleProps, backgroundColor: '#204e28' };
-      countSelectedTickets([...currentSelectedTickets, ticketNumber]);
+      newSelectedTickets = [...currentSelectedTickets, ticketNumber];
+      countSelectedTickets(newSelectedTickets);
     }
 
     setStyleButton(currentButtonStyle);

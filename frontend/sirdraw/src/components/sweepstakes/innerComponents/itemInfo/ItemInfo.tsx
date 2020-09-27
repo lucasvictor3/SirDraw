@@ -1,27 +1,29 @@
-import { Carousel, Card, Divider } from 'antd';
+import { Carousel, Card, Divider, Image } from 'antd';
 import * as React from 'react';
 import { textInfoMock } from '../../../util/mock';
 import './ItemInfo.less';
+import logo1 from '../../../../assets/asus1.png';
+import logo2 from '../../../../assets/asus2.png';
 
 const contentStyle: React.CSSProperties = {
-  height: '20rem',
+  height: '24rem',
   color: '#fff',
-  lineHeight: '20rem',
+  lineHeight: '27rem',
   textAlign: 'center',
   background: '#364d79',
-  width: '30rem',
+  width: '28rem',
 };
 
 const ItemInfo: React.StatelessComponent = (): JSX.Element => {
   return (
     <div className="main">
       <div style={{ display: 'flex' }}>
-        <Carousel style={contentStyle}>
+        <Carousel autoplay style={contentStyle}>
           <div>
-            <h3 style={contentStyle}>1</h3>
+            <Image style={contentStyle} src={logo1} />
           </div>
           <div>
-            <h3 style={contentStyle}>2</h3>
+            <Image style={contentStyle} src={logo2} />
           </div>
         </Carousel>
         <Card title="Item title" className="card-info">

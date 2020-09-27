@@ -13,7 +13,7 @@ const Sweepstakes: React.StatelessComponent = (): JSX.Element => (
     <ValueOfTicketContext.Provider value={valueOfTicketExample}>
       <SweepstakesTable
         valueOfTicket={3000}
-        total={40}
+        total={400}
         reservedNumbers={[3, 8, 10, 12, 19, 30]}
       />
     </ValueOfTicketContext.Provider>

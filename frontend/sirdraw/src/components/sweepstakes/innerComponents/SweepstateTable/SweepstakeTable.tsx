@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SweepstakesTicket from './tableComponents/SweepstakeTableTicket';
 import './SweepstakeTable.less';
 import SweepstakesTableCoupon from './tableComponents/SweepstakeTableCoupon';
@@ -19,12 +19,19 @@ const SweepstakesTable: React.FC<ISweepstakeTableProps> = ({
   total,
   reservedNumbers,
 }: ISweepstakeTableProps): JSX.Element => {
-  const [purchased, setPurchased] = useState([1, 4, 9, 20, 40]);
+  const [purchased] = useState([1, 4, 9, 20, 40]);
   const [currentNumbersSelected, setCurrentNumbersSelected] = useState([0]);
 
   const countSelectedTickets = (ticketNumber: number[]): void => {
     setCurrentNumbersSelected(ticketNumber);
   };
+
+  useEffect(() => {
+    console.log(currentNumbersSelected);
+    return () => {
+      console.log(currentNumbersSelected);
+    };
+  }, [currentNumbersSelected]);
 
   const initTable = (): JSX.Element[] => {
     let buttons: JSX.Element[] = [];
@@ -51,6 +58,7 @@ const SweepstakesTable: React.FC<ISweepstakeTableProps> = ({
 
       const element: JSX.Element = (
         <SweepstakesTicket
+          key={index}
           ticketNumber={index}
           styleProps={currentButtonStyle}
           isDisabled={isDisabled}
@@ -68,10 +76,7 @@ const SweepstakesTable: React.FC<ISweepstakeTableProps> = ({
   return (
     <div>
       <div className="main-tickets-table">{initTable()}</div>
-      <SweepstakesTableCoupon
-        ticketNumber={2}
-        currentSelectedTickets={currentNumbersSelected}
-      />
+      <SweepstakesTableCoupon currentSelectedTickets={currentNumbersSelected} />
     </div>
   );
 };
