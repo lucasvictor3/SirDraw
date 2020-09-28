@@ -23,7 +23,6 @@ cd frontend/sirdraw
 ```
 Após isso, para qualquer um dos casos acima:
 ```bash
-cd backend
  yarn install
  yarn start
 ```
