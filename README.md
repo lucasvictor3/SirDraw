@@ -13,6 +13,7 @@ Os cadastros dos sorteios serão feitos apenas pelo desenvolvedor, seja diretame
 # Instalação e execução
 
 Para rodar tanto o back-end quanto o front-end, basta apenas clonar o projeto, entrar nas respectivas pastas raízes e executar no terminal:
+
 Back-end:
 ```bash
 cd backend
