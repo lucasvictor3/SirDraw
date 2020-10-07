@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import ItemInfo from './innerComponents/itemInfo/ItemInfo';
 import SweepstakesTable from './innerComponents/SweepstateTable/SweepstakeTable';
 
@@ -7,17 +7,14 @@ export const ValueOfTicketContext: React.Context<number> = React.createContext(
   valueOfTicketExample
 );
 
-const Sweepstakes: React.StatelessComponent = (): JSX.Element => (
-  <div>
-    <ItemInfo />
-    <ValueOfTicketContext.Provider value={valueOfTicketExample}>
-      <SweepstakesTable
-        valueOfTicket={3000}
-        total={400}
-        reservedNumbers={[3, 8, 10, 12, 19, 30]}
-      />
-    </ValueOfTicketContext.Provider>
-  </div>
-);
-
+const Sweepstakes: React.FunctionComponent = (): JSX.Element => {
+  return (
+    <div>
+      <ItemInfo />
+      <ValueOfTicketContext.Provider value={valueOfTicketExample}>
+        <SweepstakesTable />
+      </ValueOfTicketContext.Provider>
+    </div>
+  );
+};
 export default Sweepstakes;

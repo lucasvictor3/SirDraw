@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import SweepstakesTicket from './tableComponents/SweepstakeTableTicket';
 import './SweepstakeTable.less';
 import SweepstakesTableCoupon from './tableComponents/SweepstakeTableCoupon';
+import SweepstakeHandler, {
+  ISweepstake,
+} from '../../../util/sweepStakeHandler';
+import { AxiosResponse } from 'axios';
 
-interface ISweepstakeTableProps {
-  total: number;
-  reservedNumbers: number[];
-  valueOfTicket: number;
-}
+interface ISweepstakeTableProps {}
 
 const buttonStyle: React.CSSProperties = {
   marginLeft: '0.4rem',
@@ -15,16 +15,27 @@ const buttonStyle: React.CSSProperties = {
   marginTop: '0.7rem',
 };
 
-const SweepstakesTable: React.FC<ISweepstakeTableProps> = ({
-  total,
-  reservedNumbers,
-}: ISweepstakeTableProps): JSX.Element => {
-  const [purchased] = useState([1, 4, 9, 20, 40]);
+const SweepstakesTable: React.FC<ISweepstakeTableProps> = (): JSX.Element => {
+  const [purchased, setPurchased] = useState([0]);
+  const [reserved, setReserved] = useState([0]);
+  const [totalTickets, setTotalTickets] = useState(0);
   const [currentNumbersSelected, setCurrentNumbersSelected] = useState([0]);
 
   const countSelectedTickets = (ticketNumber: number[]): void => {
     setCurrentNumbersSelected(ticketNumber);
   };
+
+  useEffect(() => {
+    const sweepstakeHandler = new SweepstakeHandler();
+    sweepstakeHandler
+      .getSweepstakeById('2')
+      .then((response: AxiosResponse<ISweepstake>) => {
+        console.log(response.data);
+        setTotalTickets(response.data.totalTickets);
+        setPurchased(response.data.purchasedTicketsList);
+        setReserved(response.data.reservedTicketsList);
+      });
+  }, []);
 
   useEffect(() => {
     console.log(currentNumbersSelected);
@@ -33,14 +44,18 @@ const SweepstakesTable: React.FC<ISweepstakeTableProps> = ({
     };
   }, [currentNumbersSelected]);
 
-  const initTable = (): JSX.Element[] => {
+  const initTable = (): JSX.Element[] | undefined => {
     let buttons: JSX.Element[] = [];
 
-    for (let index = 1; index <= total; index++) {
+    if (purchased[0] === 0 || reserved[0] === 0) {
+      return;
+    }
+
+    for (let index = 1; index <= totalTickets; index++) {
       let currentButtonStyle: React.CSSProperties = buttonStyle;
       let isDisabled: boolean = false;
 
-      if (reservedNumbers.includes(index)) {
+      if (reserved.includes(index)) {
         currentButtonStyle = {
           ...buttonStyle,
           backgroundColor: '#f9a443',
@@ -53,6 +68,7 @@ const SweepstakesTable: React.FC<ISweepstakeTableProps> = ({
           backgroundColor: 'black',
           color: 'white',
         };
+        console.log(currentButtonStyle);
         isDisabled = true;
       }
 
