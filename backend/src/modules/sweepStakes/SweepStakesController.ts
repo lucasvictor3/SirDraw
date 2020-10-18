@@ -10,6 +10,7 @@ sweepstakeRouter.post('/', async (req, res) => {
     const itemInfo: string = req.body.itemInfo;
     const totalTickets: number = req.body.totalTickets;
     const reservedTicketsList: number[] = req.body.reservedTicketsList;
+    const singleTicketValue: number = req.body.singleTicketValue;
 
     if (!isNumberStrict(totalTickets)) {
         res.sendStatus(404);
@@ -21,7 +22,8 @@ sweepstakeRouter.post('/', async (req, res) => {
         totalTickets,
         imageCollectionURLs,
         itemInfo,
-        reservedTicketsList
+        reservedTicketsList,
+        singleTicketValue
     );
     console.log(newSweepstake);
 
