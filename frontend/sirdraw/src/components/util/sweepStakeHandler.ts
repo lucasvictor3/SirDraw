@@ -12,9 +12,7 @@ export interface ISweepstake {
 
 class SweepstakeHandler {
   getSweepstakeById = async (sweepstakeId: string) => {
-    return await axios.get(
-      `http://192.168.1.6:8000/sweepstake/` + sweepstakeId
-    );
+    return await axios.get(`http://localhost:8000/sweepstake/` + sweepstakeId);
   };
 
   getSweepstakeTakenTicketsById = async (sweepstakeId: string) => {

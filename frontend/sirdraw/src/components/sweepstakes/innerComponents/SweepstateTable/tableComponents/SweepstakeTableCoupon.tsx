@@ -50,7 +50,7 @@ const SweepstakesTableCoupon: React.FC<ISweepstakeTicketProps> = ({
   };
 
   return (
-    <div className="coupon-card">
+    <div data-testid="table-coupon" className="coupon-card">
       <Card>
         <div className="inner-card">
           <div>
@@ -58,7 +58,7 @@ const SweepstakesTableCoupon: React.FC<ISweepstakeTicketProps> = ({
               <h2>VALOR UNITARIO: R$ </h2>
               <h2 style={{ color: 'green' }}> {singleTicket}</h2>
             </div>
-            <div style={{ display: 'flex' }}>
+            <div data-testid="table-coupon-total" style={{ display: 'flex' }}>
               <h2>TOTAL: R$ </h2>
               <h2 style={{ color: 'red' }}> {totalValue}</h2>
             </div>

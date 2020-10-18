@@ -26,7 +26,8 @@ class SweepstakesService {
         totalTickets: number,
         imageCollectionURLs: string[],
         itemInfo: string,
-        reservedTicketsList: number[]
+        reservedTicketsList: number[],
+        singleTicketValue: number
     ) => {
         const newDraw: ISweepstake = {
             numbersDrawn: [],
@@ -35,7 +36,8 @@ class SweepstakesService {
             totalTickets,
             imageCollectionURLs,
             itemInfo,
-            reservedTicketsList
+            reservedTicketsList,
+            singleTicketValue
         };
 
         this.registeredSweepstakes = [...this.registeredSweepstakes, newDraw];
