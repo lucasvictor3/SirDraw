@@ -1,19 +1,14 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import App from './App';
-import SweepstakesTableCoupon from '../sweepstakes/innerComponents/SweepstateTable/tableComponents/SweepstakeTableCoupon';
+import SweepstakesTableCoupon from '../components/sweepstakes/innerComponents/SweepstateTable/tableComponents/SweepstakeTableCoupon';
 import { unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 
-const props: {
-  currentSelectedTickets: number[];
-} = {
+const props = {
   currentSelectedTickets: [0, 1, 2, 30, 20],
 };
 
-const propsSecondary: {
-  currentSelectedTickets: number[];
-} = {
+const propsSecondary = {
   currentSelectedTickets: [0, 1, 2, 30],
 };
 
@@ -53,31 +48,3 @@ it('test sweepstake table coupoun component', async () => {
 
   expect(total.textContent).toBe('TOTAL: R$   90,00');
 });
-
-/**
- * test('renders learn react link', async () => {
-    const props: {
-      currentSelectedTickets: number[];
-    } = {
-      currentSelectedTickets: [0, 1, 2, 30, 20],
-    };
-    const { findByTestId } = render(<SweepstakesTableCoupon {...props} />);
-
-    const loginForm = await findByTestId('table-coupon');
-
-    expect(loginForm).toBeDefined();
-  });
-
-  test('renders learn react link', async () => {
-    const props: {
-      currentSelectedTickets: number[];
-    } = {
-      currentSelectedTickets: [0, 1, 2, 30, 20],
-    };
-    const { findByTestId } = render(<SweepstakesTableCoupon {...props} />);
-
-    const loginForm = await findByTestId('table-coupon');
-
-    expect(loginForm).toBeDefined();
-  });
- */
