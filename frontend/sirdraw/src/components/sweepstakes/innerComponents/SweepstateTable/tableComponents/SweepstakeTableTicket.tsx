@@ -1,8 +1,10 @@
 import { Button } from 'antd';
 import React, { useState } from 'react';
+import './SweepstakeTableTicket.less';
 
 interface ISweepstakeTicketProps {
   ticketNumber: number;
+  classname: string;
   styleProps: React.CSSProperties;
   isDisabled: boolean;
   currentSelectedTickets: number[];
@@ -12,6 +14,7 @@ interface ISweepstakeTicketProps {
 const SweepstakesTableTicket: React.FC<ISweepstakeTicketProps> = ({
   ticketNumber,
   styleProps,
+  classname,
   isDisabled,
   currentSelectedTickets,
   countSelectedTickets,
@@ -49,6 +52,7 @@ const SweepstakesTableTicket: React.FC<ISweepstakeTicketProps> = ({
       onClick={toggleButton}
       disabled={isDisabled}
       type="primary"
+      className={classname}
     >
       {ticketNumber}
     </Button>

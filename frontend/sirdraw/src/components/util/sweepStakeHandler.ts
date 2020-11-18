@@ -1,13 +1,18 @@
 import axios from 'axios';
 
+export type SweepstakeType = 'featured' | 'ongoing' | 'finished';
+
 export interface ISweepstake {
-  id: string;
+  id?: string;
+  itemTitle: string;
   imageCollectionURLs: string[];
   itemInfo: string;
   purchasedTicketsList: number[];
   reservedTicketsList: number[];
   totalTickets: number;
   numbersDrawn: number[];
+  singleTicketValue: number;
+  type: SweepstakeType;
 }
 
 class SweepstakeHandler {

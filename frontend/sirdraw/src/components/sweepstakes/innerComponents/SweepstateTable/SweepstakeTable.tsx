@@ -28,11 +28,15 @@ const SweepstakesTable: React.FC<ISweepstakeTableProps> = (): JSX.Element => {
   useEffect(() => {
     const sweepstakeHandler = new SweepstakeHandler();
     sweepstakeHandler
-      .getSweepstakeById('2')
+      .getSweepstakeById('-MMCCb2sc_zez9efQY0W')
       .then((response: AxiosResponse<ISweepstake>) => {
         console.log(response.data);
         setTotalTickets(response.data.totalTickets);
-        setPurchased(response.data.purchasedTicketsList);
+        setPurchased(
+          response.data.purchasedTicketsList === undefined
+            ? []
+            : response.data.purchasedTicketsList
+        );
         setReserved(response.data.reservedTicketsList);
       });
   }, []);
@@ -47,36 +51,31 @@ const SweepstakesTable: React.FC<ISweepstakeTableProps> = (): JSX.Element => {
   const initTable = (): JSX.Element[] | undefined => {
     let buttons: JSX.Element[] = [];
 
-    if (purchased[0] === 0 || reserved[0] === 0) {
+    if (purchased[0] === 0 && reserved[0] === 0) {
       return;
     }
 
-    for (let index = 1; index <= totalTickets; index++) {
-      let currentButtonStyle: React.CSSProperties = buttonStyle;
-      let isDisabled: boolean = false;
+    const reservedSet = new Set(reserved);
+    const purchasedSet = new Set(purchased);
 
-      if (reserved.includes(index)) {
-        currentButtonStyle = {
-          ...buttonStyle,
-          backgroundColor: '#f9a443',
-          color: 'white',
-        };
+    for (let index = 1; index <= totalTickets; index++) {
+      let isDisabled: boolean = false;
+      let className: string = '';
+
+      if (reservedSet.has(index)) {
+        className = 'reserved';
         isDisabled = true;
-      } else if (purchased.includes(index)) {
-        currentButtonStyle = {
-          ...buttonStyle,
-          backgroundColor: 'black',
-          color: 'white',
-        };
-        console.log(currentButtonStyle);
+      } else if (purchasedSet.has(index)) {
+        className = 'purchased';
         isDisabled = true;
       }
 
       const element: JSX.Element = (
         <SweepstakesTicket
           key={index}
+          classname={className}
           ticketNumber={index}
-          styleProps={currentButtonStyle}
+          styleProps={buttonStyle}
           isDisabled={isDisabled}
           currentSelectedTickets={currentNumbersSelected}
           countSelectedTickets={countSelectedTickets}
