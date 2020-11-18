@@ -25,7 +25,7 @@ const App: React.FunctionComponent = (): JSX.Element => {
           </h4>
           <h4
             onClick={() => {
-              history.push('/sweepstakes');
+              history.push('/sweepstakes/-MMCCb2sc_zez9efQY0W');
             }}
             className="header-options"
           >
@@ -38,7 +38,11 @@ const App: React.FunctionComponent = (): JSX.Element => {
       </div>
       <div>
         <Route exact path="/" component={Homescreen} />
-        <Route exact path="/sweepstakes" component={Sweepstakes} />
+        <Route
+          exact
+          path="/sweepstakes/:sweepstakeId"
+          component={Sweepstakes}
+        />
       </div>
     </div>
   );

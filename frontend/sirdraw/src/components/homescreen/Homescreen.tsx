@@ -1,7 +1,11 @@
-import { Carousel } from 'antd';
+import { Carousel, Input } from 'antd';
 import * as React from 'react';
 
+const { Search } = Input;
+
 const Homescreen: React.FunctionComponent = (): JSX.Element => {
+  const [filterValue, setFilterValue] = React.useState('');
+
   const onChange = (a: number) => {
     console.log(a);
   };
@@ -30,6 +34,15 @@ const Homescreen: React.FunctionComponent = (): JSX.Element => {
           <h3 style={contentStyle}>4</h3>
         </div>
       </Carousel>
+      <Search
+        placeholder="input search text"
+        onSearch={(value) => {
+          setFilterValue(value);
+        }}
+        onChange={(event) => setFilterValue(event.target.value)}
+        value={filterValue}
+        enterButton
+      />
     </div>
   );
 };
