@@ -13,7 +13,7 @@ const contentStyle: React.CSSProperties = {
   width: '28rem',
 };
 
-const ItemInfo: React.FC = (): JSX.Element => {
+const ItemInfo: React.FC = () => {
   const sweepstakeObj: ISweepstake | null = React.useContext(
     SweepstakeTableDataContext
   );

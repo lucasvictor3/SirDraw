@@ -15,14 +15,29 @@ export interface ISweepstake {
   type: SweepstakeType;
 }
 
+interface IUpdateTicketRequest {
+  purchasedTicketsList: number[];
+  sweepstakeId: string;
+}
+
 class SweepstakeHandler {
   getSweepstakeById = async (sweepstakeId: string) => {
     return await axios.get(`http://localhost:8000/sweepstake/` + sweepstakeId);
   };
 
+  updateSweepstakePurchasedTickets = async (buyObj: IUpdateTicketRequest) => {
+    return await axios.put(`http://192.168.1.6:8000/sweepstake/`, buyObj);
+  };
+
   getSweepstakeTakenTicketsById = async (sweepstakeId: string) => {
     return await axios.get(
       `http://192.168.1.6:8000/sweepstake/${sweepstakeId}/tickets`
+    );
+  };
+
+  getSweepstakeByFilterValue = async (filterValue: string) => {
+    return await axios.get(
+      `http://192.168.1.6:8000/sweepstake/byFilter/${filterValue}`
     );
   };
 

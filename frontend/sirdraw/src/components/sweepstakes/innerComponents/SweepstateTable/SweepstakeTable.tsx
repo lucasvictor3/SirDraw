@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import SweepstakesTicket from './tableComponents/SweepstakeTableTicket';
 import './SweepstakeTable.less';
 import SweepstakesTableCoupon from './tableComponents/SweepstakeTableCoupon';
-import SweepstakeHandler, {
-  ISweepstake,
-} from '../../../util/sweepStakeHandler';
-import { AxiosResponse } from 'axios';
+import { ISweepstake } from '../../../util/sweepStakeHandler';
+import { SweepstakeTableDataContext } from '../../Sweepstakes';
 
 interface ISweepstakeTableProps {}
 
@@ -15,38 +13,39 @@ const buttonStyle: React.CSSProperties = {
   marginTop: '0.7rem',
 };
 
-const SweepstakesTable: React.FC<ISweepstakeTableProps> = (): JSX.Element => {
+const SweepstakesTable: React.FC<ISweepstakeTableProps> = () => {
   const [purchased, setPurchased] = useState([0]);
   const [reserved, setReserved] = useState([0]);
   const [totalTickets, setTotalTickets] = useState(0);
   const [currentNumbersSelected, setCurrentNumbersSelected] = useState([0]);
+
+  const sweepstakeObj: ISweepstake | null = useContext(
+    SweepstakeTableDataContext
+  );
 
   const countSelectedTickets = (ticketNumber: number[]): void => {
     setCurrentNumbersSelected(ticketNumber);
   };
 
   useEffect(() => {
-    const sweepstakeHandler = new SweepstakeHandler();
-    sweepstakeHandler
-      .getSweepstakeById('-MMCCb2sc_zez9efQY0W')
-      .then((response: AxiosResponse<ISweepstake>) => {
-        console.log(response.data);
-        setTotalTickets(response.data.totalTickets);
-        setPurchased(
-          response.data.purchasedTicketsList === undefined
-            ? []
-            : response.data.purchasedTicketsList
-        );
-        setReserved(response.data.reservedTicketsList);
-      });
-  }, []);
+    if (sweepstakeObj !== null) {
+      setTotalTickets(sweepstakeObj.totalTickets);
+      setPurchased(
+        sweepstakeObj.purchasedTicketsList !== undefined
+          ? sweepstakeObj.purchasedTicketsList
+          : [0]
+      );
+      setReserved(
+        sweepstakeObj.reservedTicketsList !== undefined
+          ? sweepstakeObj.reservedTicketsList
+          : [0]
+      );
+    }
+  }, [sweepstakeObj]);
 
   useEffect(() => {
-    console.log(currentNumbersSelected);
-    return () => {
-      console.log(currentNumbersSelected);
-    };
-  }, [currentNumbersSelected]);
+    setCurrentNumbersSelected([0]);
+  }, [purchased]);
 
   const initTable = (): JSX.Element[] | undefined => {
     let buttons: JSX.Element[] = [];
@@ -91,7 +90,10 @@ const SweepstakesTable: React.FC<ISweepstakeTableProps> = (): JSX.Element => {
   return (
     <div>
       <div className="main-tickets-table">{initTable()}</div>
-      <SweepstakesTableCoupon currentSelectedTickets={currentNumbersSelected} />
+      <SweepstakesTableCoupon
+        currentSelectedTickets={currentNumbersSelected}
+        setPurchased={setPurchased}
+      />
     </div>
   );
 };

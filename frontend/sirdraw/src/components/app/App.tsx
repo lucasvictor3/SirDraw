@@ -36,7 +36,7 @@ const App: React.FunctionComponent = (): JSX.Element => {
           <h4 className="header-options">TERMOS E CONDIÇÕES DE USO</h4>
         </div>
       </div>
-      <div>
+      <div className="route-render">
         <Route exact path="/" component={Homescreen} />
         <Route
           exact

@@ -27,6 +27,7 @@ class SweepstakesService {
         let sweepstake;
         await this.db.ref('sweepstakes/' + sweepstakeId).once('value', (sweepstakeObj) => {
             sweepstake = sweepstakeObj.val();
+            sweepstake['id'] = sweepstakeId;
         });
         return sweepstake;
     };
@@ -91,6 +92,28 @@ class SweepstakesService {
         return sweepstakesList;
     };
 
+    findSweepstakeByTitleOrDescrip = async (filterValue: string) => {
+        let sweepstakes;
+        let filteredSweepstakeList: ISweepstake[] = [];
+        await this.db.ref('sweepstakes').once('value', (sweepstakeObj) => {
+            sweepstakes = sweepstakeObj.val();
+        });
+
+        Object.entries(sweepstakes).forEach((sweepStakeTuple) => {
+            const sweepstakeId: string = sweepStakeTuple[0];
+            const sweepstakeData: any = sweepStakeTuple[1];
+
+            if (
+                sweepstakeData.itemTitle.includes(filterValue) ||
+                sweepstakeData.itemInfo.includes(filterValue)
+            ) {
+                filteredSweepstakeList.push({ ...sweepstakeData, id: sweepstakeId });
+            }
+        });
+
+        return filteredSweepstakeList;
+    };
+
     getTotalTickets = async (sweepstakeId: string) => {
         const sweepstakeObj = await this.findRequestedSweepstake(sweepstakeId);
         if (sweepstakeObj === null) return null;
@@ -105,8 +128,8 @@ class SweepstakesService {
 
     addNewPurchasedTicketToList = async (
         sweepstakeId: string,
-        ticketList: number[],
-        reservedTicketsList: number[]
+        ticketList?: number[],
+        reservedTicketsList?: number[]
     ) => {
         let sweepstakeObj: ISweepstake = await this.findRequestedSweepstake(sweepstakeId);
 
@@ -121,8 +144,9 @@ class SweepstakesService {
 
         sweepstakeObj.reservedTicketsList = [...currentReservedTickets, ...reservedTicketsList];
 
+        console.log('TESTE: ', sweepstakeObj);
         await this.db
-            .ref('/sweepstakes' + sweepstakeId)
+            .ref('sweepstakes/' + sweepstakeId)
             .update(sweepstakeObj)
             .catch((error) => {
                 logger.error(error);

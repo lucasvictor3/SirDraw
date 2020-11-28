@@ -49,8 +49,10 @@ sweepstakeRouter.get('/:sweepstakeId', async (req, res) => {
 });
 
 sweepstakeRouter.put('/', async (req, res) => {
-    const reservedTicketsList: number[] = req.body.reservedTicketsList;
-    const purchasedTicketsList: number[] = req.body.purchasedTicketsList;
+    const reservedTicketsList: number[] =
+        req.body.reservedTicketsList === undefined ? [] : req.body.reservedTicketsList;
+    const purchasedTicketsList: number[] =
+        req.body.purchasedTicketsList === undefined ? [] : req.body.purchasedTicketsList;
     const sweepstakeId: string = String(req.body.sweepstakeId);
     const newPurchasedTicketList = await sweepstakeService.addNewPurchasedTicketToList(
         sweepstakeId,
@@ -66,6 +68,14 @@ sweepstakeRouter.put('/', async (req, res) => {
     }
 
     res.status(200).json(newPurchasedTicketList);
+});
+
+sweepstakeRouter.get('/byFilter/:filterValue', async (req, res) => {
+    const filterValue: string = req.params.filterValue;
+    const sweepstakesList = await sweepstakeService.findSweepstakeByTitleOrDescrip(filterValue);
+    logger.info(sweepstakesList);
+
+    res.status(200).json(sweepstakesList);
 });
 
 sweepstakeRouter.get('/get/all', async (req, res) => {

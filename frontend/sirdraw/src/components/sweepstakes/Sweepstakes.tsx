@@ -16,19 +16,19 @@ export const SweepstakeTableDataContext = React.createContext<ISweepstake | null
 
 interface ISweepstakeDataContextProps {
   children: React.ReactNode;
-  userId: string;
+  sweepstakeId: string;
 }
 
 export const SweepstakeTableDataProvider: React.FC<ISweepstakeDataContextProps> = ({
   children,
-  userId,
+  sweepstakeId,
 }) => {
   const [sweepstakeData, setSweepstakeData] = React.useState(null);
   const sweepStakeService = new SweepstakeHandler();
 
   useEffect(() => {
     sweepStakeService
-      .getSweepstakeById(userId)
+      .getSweepstakeById(sweepstakeId)
       .then((response: AxiosResponse) => {
         setSweepstakeData(response.data);
         console.log(response.data);
@@ -53,7 +53,7 @@ const Sweepstakes: React.FC<RouteComponentProps<IRouteProps>> = ({
   console.log(match.params.sweepstakeId);
   return (
     <div>
-      <SweepstakeTableDataProvider userId={match.params.sweepstakeId}>
+      <SweepstakeTableDataProvider sweepstakeId={match.params.sweepstakeId}>
         <ItemInfo />
         <ValueOfTicketContext.Provider value={valueOfTicketExample}>
           <SweepstakesTable />
